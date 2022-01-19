@@ -12,4 +12,9 @@ object Constant {
     const val moviesTableName = "tMovies"
     const val databaseVersion = 1
     //endregion
+    //region name's fragments
+    const val nameMovies = "moviesFragment"
+    const val nameMaps = "mapsFragment"
+    const val nameImages = "imagesFragment"
+    //endregion
 }
