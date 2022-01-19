@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movies.R
 import com.example.movies.core.Constant.urlImage
 import com.example.movies.core.DrawableBuilder
+import com.example.movies.core.RoundCorners
 import com.example.movies.data.model.MovieModel
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
@@ -44,6 +45,7 @@ class MovieHolder(view: View): RecyclerView.ViewHolder(view) {
     private fun loadImage(imagePath: String) {
         Picasso.get()
             .load(urlImage + imagePath)
+            .transform(RoundCorners())
             .placeholder(R.drawable.picture)
             .into(ivMovie)
     }
