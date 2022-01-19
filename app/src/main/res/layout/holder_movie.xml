@@ -1,25 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
-    android:layout_width="match_parent">
-    <TextView
-        android:id="@+id/tvTitle"
+    android:layout_width="match_parent"
+    android:padding="16dp">
+
+    <RelativeLayout
+        android:id="@+id/rlParent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
-    <TextView
-        android:id="@+id/tvReleaseDate"
-        android:layout_below="@id/tvTitle"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
-    <TextView
-        android:id="@+id/tvVoteAverage"
-        android:layout_below="@id/tvReleaseDate"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
-    <TextView
-        android:id="@+id/tvVoteCount"
-        android:layout_below="@id/tvVoteAverage"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
+        android:layout_width="match_parent"
+        tools:ignore="UselessParent">
+        <ImageView
+            android:id="@+id/ivMovie"
+            android:layout_height="150dp"
+            android:layout_width="100dp"
+            tools:ignore="ContentDescription"/>
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/ivMovie"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tvTitle"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tvReleaseDate"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tvVoteAverageCount"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+    </RelativeLayout>
+
 </RelativeLayout>

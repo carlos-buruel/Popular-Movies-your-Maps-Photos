@@ -1,12 +1,10 @@
 package com.example.movies.ui.view.activity
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.movies.core.Constant
 import com.example.movies.databinding.ActivityMainBinding
 import com.example.movies.ui.view.SlideAdapter
-import com.example.movies.ui.viewModel.MovieViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity: AppCompatActivity() {
