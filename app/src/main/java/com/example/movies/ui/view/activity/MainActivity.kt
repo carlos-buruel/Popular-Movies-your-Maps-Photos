@@ -24,5 +24,7 @@ class MainActivity: AppCompatActivity() {
                 tab.text = title
             }.attach()
         }
+
+
     }
 }

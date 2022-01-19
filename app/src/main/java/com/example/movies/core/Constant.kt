@@ -7,4 +7,9 @@ object Constant {
     const val page = 1
 
     val nameTabs = arrayListOf("Movies", "Location")
+    //region Database
+    const val databaseName = "dbMovies"
+    const val moviesTableName = "tMovies"
+    const val databaseVersion = 1
+    //endregion
 }

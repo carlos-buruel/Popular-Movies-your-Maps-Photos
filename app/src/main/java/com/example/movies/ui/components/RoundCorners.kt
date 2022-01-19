@@ -1,4 +1,4 @@
-package com.example.movies.core
+package com.example.movies.ui.components
 
 import android.graphics.*
 import com.squareup.picasso.Transformation

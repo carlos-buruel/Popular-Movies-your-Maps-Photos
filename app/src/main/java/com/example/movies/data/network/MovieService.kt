@@ -12,13 +12,17 @@ class MovieService {
 
     suspend fun getAllMovies(): MoviesModel {
         return withContext(Dispatchers.IO) {
-            val response = retrofit.create(MovieApiClient::class.java)
-                .getAllMovies(
-                    Constant.apiKey,
-                    Constant.language,
-                    Constant.page
-                )
-            response.body() ?: emptyMovies()
+            try {
+                val response = retrofit.create(MovieApiClient::class.java)
+                    .getAllMovies(
+                        Constant.apiKey,
+                        Constant.language,
+                        Constant.page
+                    )
+                response.body() ?: emptyMovies()
+            } catch (ex: Exception) {
+                emptyMovies()
+            }
         }
     }
 }

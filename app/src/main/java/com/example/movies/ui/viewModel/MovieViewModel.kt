@@ -18,10 +18,8 @@ class MovieViewModel: ViewModel() {
             isLoading.postValue(true)
             val result = getMovieUseCase()
 
-            if (!result.results.isNullOrEmpty()) {
-                moviesModel.postValue(result.results)
-                isLoading.postValue(false)
-            }
+            moviesModel.postValue(result.results)
+            isLoading.postValue(false)
         }
     }
 }

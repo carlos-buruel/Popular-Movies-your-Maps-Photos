@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movies.R
 import com.example.movies.core.Constant.urlImage
 import com.example.movies.core.DrawableBuilder
-import com.example.movies.core.RoundCorners
+import com.example.movies.ui.components.RoundCorners
 import com.example.movies.data.model.MovieModel
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat

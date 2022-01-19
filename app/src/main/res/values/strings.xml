@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Movies</string>
+    <string name="empty_movies">No hay Peliculas disponibles</string>
 </resources>
