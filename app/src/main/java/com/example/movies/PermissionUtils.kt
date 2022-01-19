@@ -4,8 +4,10 @@ import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -37,7 +39,6 @@ object PermissionUtils {
 		}
 		return false
 	}
-
 
 	class RationaleDialog: DialogFragment() {
 		private var finishActivity = false
@@ -83,5 +84,23 @@ object PermissionUtils {
 		}
 	}
 
+	class GpsDialog: DialogFragment() {
+		override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
+			return AlertDialog.Builder(activity)
+				.setMessage(R.string.request_gps)
+				.setCancelable(false)
+				.setPositiveButton(android.R.string.ok) { _, _ ->
+					startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+				}
+				.setNegativeButton(android.R.string.cancel, null)
+				.create()
+		}
+
+		companion object {
+			fun newInstance(): GpsDialog {
+				return GpsDialog()
+			}
+		}
+	}
 }

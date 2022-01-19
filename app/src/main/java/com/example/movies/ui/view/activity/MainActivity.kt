@@ -1,13 +1,17 @@
 package com.example.movies.ui.view.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.movies.PermissionUtils
 import com.example.movies.PermissionUtils.isPermissionGranted
 import com.example.movies.PermissionUtils.requestPermission
 import com.example.movies.R
@@ -21,6 +25,7 @@ import com.example.movies.ui.view.fragment.MoviesFragment
 class MainActivity: AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding
 	private var lastFragment = ""
+
 	private var permissionDenied = false
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,10 +98,22 @@ class MainActivity: AppCompatActivity() {
 	private fun enableLocation() {
 		if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
 			== PackageManager.PERMISSION_GRANTED) {
-			//TODO read location
+			enableGPS()
 		} else {
 			requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
 				Manifest.permission.ACCESS_FINE_LOCATION, true)
+		}
+	}
+
+	@SuppressLint("MissingPermission")
+	private fun enableGPS() {
+		(getSystemService(Context.LOCATION_SERVICE) as? LocationManager)?.let { locationManager ->
+			if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+				PermissionUtils.GpsDialog.newInstance()
+					.show(supportFragmentManager, "dialog")
+			} else {
+				LocationManager(this).onResume()
+			}
 		}
 	}
 

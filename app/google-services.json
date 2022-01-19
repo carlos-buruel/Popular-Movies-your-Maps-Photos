@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "766464724146",
+    "project_id": "movies-maps-and-photos",
+    "storage_bucket": "movies-maps-and-photos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766464724146:android:161922eaa3ff53c00b4dab",
+        "android_client_info": {
+          "package_name": "com.example.movies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766464724146-45mrqoa8avcn8dvciujpnsq3rnelha65.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.movies",
+            "certificate_hash": "be71e313c4d66a5e938811f5e26f306b76dd77ce"
+          }
+        },
+        {
+          "client_id": "766464724146-tdvf94bh39bdbks0si040jhdqnlti132.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjS5BSfdsWrhcSFrWVwB35LOEFqR1HgEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766464724146-tdvf94bh39bdbks0si040jhdqnlti132.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
