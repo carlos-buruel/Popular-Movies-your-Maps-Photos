@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
@@ -84,22 +85,24 @@ object PermissionUtils {
 		}
 	}
 
-	class GpsDialog: DialogFragment() {
+	class GpsDialog(
+		private val result: ActivityResultLauncher<Intent>
+	): DialogFragment() {
 		override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
 			return AlertDialog.Builder(activity)
 				.setMessage(R.string.request_gps)
 				.setCancelable(false)
 				.setPositiveButton(android.R.string.ok) { _, _ ->
-					startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+					val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+					result.launch(intent)
 				}
 				.setNegativeButton(android.R.string.cancel, null)
 				.create()
 		}
 
 		companion object {
-			fun newInstance(): GpsDialog {
-				return GpsDialog()
+			fun newInstance(result: ActivityResultLauncher<Intent>): GpsDialog {
+				return GpsDialog(result)
 			}
 		}
 	}

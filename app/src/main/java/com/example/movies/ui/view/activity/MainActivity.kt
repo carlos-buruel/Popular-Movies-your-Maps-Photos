@@ -8,6 +8,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -20,13 +21,24 @@ import com.example.movies.core.Constant.nameMaps
 import com.example.movies.core.Constant.nameImages
 import com.example.movies.core.addFragment
 import com.example.movies.databinding.ActivityMainBinding
+import com.example.movies.ui.view.fragment.map.MapHistoryFragment
 import com.example.movies.ui.view.fragment.MoviesFragment
 
 class MainActivity: AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding
 	private var lastFragment = ""
-
 	private var permissionDenied = false
+
+	private val getResult = registerForActivityResult(
+		ActivityResultContracts.StartActivityForResult()
+	) {
+		if (!isProviderEnable()) {
+			requestGps()
+		} else {
+			toString()
+			//LocationManager(this).onResume()
+		}
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -35,7 +47,7 @@ class MainActivity: AppCompatActivity() {
 
 		binding.run {
 			setSupportActionBar(toolbar)
-			lastFragment = getString(R.string.title_movies)
+			lastFragment = nameMovies
 			title = lastFragment
 			addFragment(MoviesFragment())
 		}
@@ -50,6 +62,7 @@ class MainActivity: AppCompatActivity() {
 	override fun onOptionsItemSelected(item: MenuItem) = when(item.itemId) {
 		R.id.iMovies -> {
 			if (lastFragment != nameMovies) {
+				title = nameMovies
 				lastFragment = nameMovies
 				addFragment(MoviesFragment())
 			}
@@ -57,13 +70,15 @@ class MainActivity: AppCompatActivity() {
 		}
 		R.id.iMaps -> {
 			if (lastFragment != nameMaps) {
+				title = nameMaps
 				lastFragment = nameMaps
-				addFragment(MoviesFragment())
+				addFragment(MapHistoryFragment())
 			}
 			true
 		}
 		R.id.iImages -> {
 			if (lastFragment != nameImages) {
+				title = nameImages
 				lastFragment = nameImages
 				addFragment(MoviesFragment())
 			}
@@ -107,14 +122,23 @@ class MainActivity: AppCompatActivity() {
 
 	@SuppressLint("MissingPermission")
 	private fun enableGPS() {
-		(getSystemService(Context.LOCATION_SERVICE) as? LocationManager)?.let { locationManager ->
-			if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-				PermissionUtils.GpsDialog.newInstance()
-					.show(supportFragmentManager, "dialog")
-			} else {
-				LocationManager(this).onResume()
-			}
+		if (!isProviderEnable()) {
+			requestGps()
+		} else {
+			toString()
+			//LocationManager(this).onResume()
 		}
+	}
+
+	private fun isProviderEnable(): Boolean {
+		return (getSystemService(Context.LOCATION_SERVICE) as? LocationManager)?.let { manager ->
+			return (manager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+		} ?: run { false }
+	}
+
+	private fun requestGps() {
+		PermissionUtils.GpsDialog.newInstance(getResult)
+			.show(supportFragmentManager, "dialog")
 	}
 
 	companion object {
