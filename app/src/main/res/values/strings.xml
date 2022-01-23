@@ -8,4 +8,5 @@
     <string name="permission_rationale_location">Se requiere acceso al servicio de ubicación para demostrar la función \'mi ubicación\', que muestra su ubicación actual en el mapa.</string>
     <string name="permission_required_toast">Se requiere permiso de ubicación para esta demostración.</string>
     <string name="request_gps">Tu GPS parece estar deshabilitado, ¿quieres habilitarlo?</string>
+    <string name="update_images">Subir imagenes</string>
 </resources>

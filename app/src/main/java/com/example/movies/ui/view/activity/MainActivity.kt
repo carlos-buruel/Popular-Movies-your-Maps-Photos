@@ -12,17 +12,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.movies.PermissionUtils
-import com.example.movies.PermissionUtils.isPermissionGranted
-import com.example.movies.PermissionUtils.requestPermission
+import com.example.movies.core.PermissionUtils
+import com.example.movies.core.PermissionUtils.isPermissionGranted
+import com.example.movies.core.PermissionUtils.requestPermission
 import com.example.movies.R
 import com.example.movies.core.Constant.nameMovies
 import com.example.movies.core.Constant.nameMaps
 import com.example.movies.core.Constant.nameImages
 import com.example.movies.core.addFragment
 import com.example.movies.databinding.ActivityMainBinding
+import com.example.movies.ui.view.fragment.images.ImageFragment
 import com.example.movies.ui.view.fragment.map.MapHistoryFragment
-import com.example.movies.ui.view.fragment.MoviesFragment
+import com.example.movies.ui.view.fragment.movie.MoviesFragment
+import com.example.movies.core.LocationManager as LocationCatcher
 
 class MainActivity: AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding
@@ -35,8 +37,7 @@ class MainActivity: AppCompatActivity() {
 		if (!isProviderEnable()) {
 			requestGps()
 		} else {
-			toString()
-			//LocationManager(this).onResume()
+			LocationCatcher(this).onResume()
 		}
 	}
 
@@ -80,7 +81,7 @@ class MainActivity: AppCompatActivity() {
 			if (lastFragment != nameImages) {
 				title = nameImages
 				lastFragment = nameImages
-				addFragment(MoviesFragment())
+				addFragment(ImageFragment())
 			}
 			true
 		}
@@ -125,8 +126,7 @@ class MainActivity: AppCompatActivity() {
 		if (!isProviderEnable()) {
 			requestGps()
 		} else {
-			toString()
-			//LocationManager(this).onResume()
+			LocationCatcher(this).onResume()
 		}
 	}
 

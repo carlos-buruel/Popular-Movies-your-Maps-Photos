@@ -16,7 +16,6 @@ class LocationService {
 			.addOnSuccessListener { result ->
 				val list = ArrayList<LatitudeLongitude>()
 				for (document in result) {
-					document.id
 					val obj = document.toObject<LatitudeLongitude>()
 					list.add(obj)
 				}

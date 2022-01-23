@@ -1,4 +1,4 @@
-package com.example.movies
+package com.example.movies.core
 
 import android.Manifest
 import android.app.AlertDialog
@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
+import com.example.movies.R
 
 object PermissionUtils {
 	fun requestPermission(
