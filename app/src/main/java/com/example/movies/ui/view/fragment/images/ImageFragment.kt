@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.movies.data.network.ImageService
@@ -22,15 +23,6 @@ class ImageFragment: Fragment(), ImageContract {
 	private val imageService = ImageService()
 	private lateinit var imagesAdapter: ImagesAdapter
 	private val aUrlImages = ArrayList<String>()
-
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View {
-		binding = FragmentImageGaleryBinding.inflate(inflater, container, false)
-		return binding.root
-	}
 
 	private val getResult = registerForActivityResult(
 		ActivityResultContracts.StartActivityForResult()
@@ -51,9 +43,19 @@ class ImageFragment: Fragment(), ImageContract {
 		}
 	}
 
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
+		binding = FragmentImageGaleryBinding.inflate(inflater, container, false)
+		return binding.root
+	}
+
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		ImageService().getImages(this)
 		binding.run {
+			tvUpload.stateListAnimator = null
 			tvUpload.setOnClickListener {
 				val intentImage = Intent().apply {
 					type = "image/*"
@@ -63,17 +65,30 @@ class ImageFragment: Fragment(), ImageContract {
 				val intent = Intent.createChooser(intentImage, "Elija sus photos")
 				getResult.launch(intent)
 			}
+			//region initList
+			imagesAdapter = ImagesAdapter(aUrlImages)
+			binding.run {
+				rvImages.layoutManager = GridLayoutManager(requireActivity(), 2, GridLayoutManager.VERTICAL, false)
+				rvImages.adapter = imagesAdapter
+			}
+			//endregion
 		}
 	}
 
-	override fun getUrlImages(aUrlImages: ArrayList<String>) {
-		this.aUrlImages.clear()
-		this.aUrlImages.addAll(aUrlImages)
-
-		imagesAdapter = ImagesAdapter(aUrlImages)
+	override fun setUrlImages(urlImages: String) {
 		binding.run {
-			rvImages.layoutManager = GridLayoutManager(requireActivity(), 2, GridLayoutManager.VERTICAL, false)
-			rvImages.adapter = imagesAdapter
+			if (progress.isVisible) {
+				progress.isVisible = false
+			}
+
+			if (urlImages.isNotEmpty()) {
+				tvMessage.visibility = View.GONE
+
+				aUrlImages.add(urlImages)
+				imagesAdapter.notifyItemRangeChanged(aUrlImages.size - 1, 1)
+			} else {
+				tvMessage.visibility = View.VISIBLE
+			}
 		}
 	}
 

@@ -4,17 +4,38 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical">
-    <TextView
+    <Button
         android:gravity="center_horizontal"
         android:id="@+id/tvUpload"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_width="match_parent"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
         android:text="@string/update_images"
+        android:textAllCaps="false"
         android:textSize="20sp"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvImages"
+    <RelativeLayout
         android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
+        android:layout_width="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvImages"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"/>
+        <TextView
+            android:background="@color/white"
+            android:gravity="center"
+            android:id="@+id/tvMessage"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:text="@string/empty_images"
+            android:textSize="20sp"
+            android:visibility="gone"/>
+        <ProgressBar
+            android:background="@color/white"
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
 </LinearLayout>

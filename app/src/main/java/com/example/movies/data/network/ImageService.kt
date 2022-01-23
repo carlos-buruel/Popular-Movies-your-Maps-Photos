@@ -3,30 +3,42 @@ package com.example.movies.data.network
 import android.graphics.Bitmap
 import android.util.Log
 import com.example.movies.ui.view.fragment.images.ImageContract
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ImageService {
 	private val database = Firebase.firestore
 
 	fun getImages(view: ImageContract) {
 		database.collection("images")
-			.get()
-			.addOnSuccessListener { result ->
-				val aUrlList = ArrayList<String>()
-				for (document in result) {
-					val url = document.getString("url_image") ?: ""
-					aUrlList.add(url)
+			.addSnapshotListener { snapshots, error ->
+				error?.let {
+					Log.e("IMAGE_ID", "Error Escucha fallo", error)
+				} ?: run {
+					snapshots?.documentChanges?.let { documents ->
+						if (documents.size == 0) {
+							view.setUrlImages("")
+							return@addSnapshotListener
+						}
+						for (documentChanged in documents) {
+							when (documentChanged.type) {
+								DocumentChange.Type.ADDED -> {
+									val data = documentChanged.document.data
+									val url = data["url_image"].toString()
+									if (url.isNotEmpty()) {
+										view.setUrlImages(url)
+									}
+								}
+								else -> {}
+							}
+						}
+					}
 				}
-				view.getUrlImages(aUrlList)
-			}
-			.addOnFailureListener { exception ->
-				exception.toString()
 			}
 	}
 
@@ -42,7 +54,7 @@ class ImageService {
 
 		val uploadTask = imageRef.putBytes(data1)
 		uploadTask.addOnFailureListener { error ->
-			error.toString()
+			Log.e("IMAGE_ID", "Error on upload image", error)
 		}
 		uploadTask.addOnSuccessListener { taskSnapshot ->
 			taskSnapshot.toString()
@@ -64,11 +76,8 @@ class ImageService {
 		)
 		database.collection("images")
 			.add(imageData)
-			.addOnSuccessListener { documentReference ->
-				Log.d("IMAGE_ID", documentReference.id)
-			}
 			.addOnFailureListener { error ->
-				Log.d("IMAGE_ID", "Error registered document", error)
+				Log.e("IMAGE_ID", "Error registered image", error)
 			}
 	}
 }

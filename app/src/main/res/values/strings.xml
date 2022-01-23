@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Movies</string>
     <string name="empty_movies">No hay Peliculas disponibles</string>
+    <string name="empty_images">No hay Images disponibles</string>
     <string name="tmovie">Peliculas</string>
     <string name="tmaps">Mapas</string>
     <string name="timages">Imagenes</string>
