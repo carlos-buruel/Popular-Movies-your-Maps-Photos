@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.movies.core.SpacesItemDecoration
 import com.example.movies.data.network.ImageService
 import com.example.movies.databinding.FragmentImageGaleryBinding
 
@@ -68,8 +69,11 @@ class ImageFragment: Fragment(), ImageContract {
 			//region initList
 			imagesAdapter = ImagesAdapter(aUrlImages)
 			binding.run {
-				rvImages.layoutManager = GridLayoutManager(requireActivity(), 2, GridLayoutManager.VERTICAL, false)
-				rvImages.adapter = imagesAdapter
+				rvImages.run {
+					layoutManager = GridLayoutManager(requireActivity(), 2, GridLayoutManager.VERTICAL, false)
+					addItemDecoration(SpacesItemDecoration())
+					adapter = imagesAdapter
+				}
 			}
 			//endregion
 		}

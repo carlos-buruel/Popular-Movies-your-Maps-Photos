@@ -23,8 +23,8 @@ class LocationManager(private val context: Context) {
 		}
 
 		val locationRequest = LocationRequest.create().apply {
-			interval = 30000// 1800000
-			fastestInterval = 25000// 900000
+			interval = 1800000
+			fastestInterval = 900000
 			priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 		}
 		fusedLocationProviderClient.requestLocationUpdates(

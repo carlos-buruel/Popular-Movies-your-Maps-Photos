@@ -12,7 +12,7 @@ class RoundCorners: Transformation {
         val paint =  Paint()
         val rect =  Rect(0, 0, source.width, source.height)
         val rectF = RectF(rect)
-        val roundPx = 21f
+        val roundPx = source.width * 0.1f
 
         paint.isAntiAlias = true
         canvas.drawARGB(0, 0, 0, 0)
